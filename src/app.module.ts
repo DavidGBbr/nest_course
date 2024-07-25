@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EnvConfigModule } from './shared/infraestructure/env-config/env-config.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [EnvConfigModule],
+  imports: [UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
