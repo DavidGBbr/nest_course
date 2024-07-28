@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Put,
+  Delete,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -69,5 +70,17 @@ export class UserController {
     this.users[userIndex] = updatedUser;
 
     return updatedUser;
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    const userIndex = this.users.findIndex((user) => user.id === Number(id));
+
+    if (userIndex === -1) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    this.users.splice(userIndex, 1);
+    return { message: 'User deleted successfully' };
   }
 }
