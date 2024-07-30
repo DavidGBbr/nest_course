@@ -9,14 +9,14 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
+import { CreateUserDTO } from './dto/create-user.dto';
 
 @Controller('users')
 export class UserController {
   private readonly users = [];
 
   @Post()
-  async createUser(@Body() body) {
-    const { name, email, password } = body;
+  async createUser(@Body() { name, email, password }: CreateUserDTO) {
     const user = { id: Date.now(), name, email, password };
     this.users.push(user);
     return user;
