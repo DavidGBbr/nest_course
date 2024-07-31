@@ -10,6 +10,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
+import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -33,8 +35,10 @@ export class UserController {
   }
 
   @Put(':id')
-  async updateUser(@Body() body, @Param('id') id: string) {
-    const { name, email, password } = body;
+  async updateUser(
+    @Body() { name, email, password }: UpdateUserDTO,
+    @Param('id') id: string,
+  ) {
     const userIndex = this.users.findIndex((user) => user.id === Number(id));
 
     if (userIndex === -1) {
@@ -46,8 +50,10 @@ export class UserController {
   }
 
   @Patch(':id')
-  async updatePartialUser(@Body() body, @Param('id') id: string) {
-    const { name, email, password } = body;
+  async updatePartialUser(
+    @Body() { name, email, password }: UpdatePatchUserDTO,
+    @Param('id') id: string,
+  ) {
     const userIndex = this.users.findIndex((user) => user.id === Number(id));
 
     if (userIndex === -1) {
