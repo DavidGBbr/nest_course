@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
@@ -30,16 +31,16 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUserById(@Param('id') id: string) {
-    return this.users.find((user) => user.id === Number(id));
+  async getUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.users.find((user) => user.id === id);
   }
 
   @Put(':id')
   async updateUser(
     @Body() { name, email, password }: UpdateUserDTO,
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
   ) {
-    const userIndex = this.users.findIndex((user) => user.id === Number(id));
+    const userIndex = this.users.findIndex((user) => user.id === id);
 
     if (userIndex === -1) {
       throw new NotFoundException(`User with ID ${id} not found`);
@@ -52,9 +53,9 @@ export class UserController {
   @Patch(':id')
   async updatePartialUser(
     @Body() { name, email, password }: UpdatePatchUserDTO,
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
   ) {
-    const userIndex = this.users.findIndex((user) => user.id === Number(id));
+    const userIndex = this.users.findIndex((user) => user.id === id);
 
     if (userIndex === -1) {
       throw new NotFoundException(`User with ID ${id} not found`);
@@ -79,8 +80,8 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
-    const userIndex = this.users.findIndex((user) => user.id === Number(id));
+  async deleteUser(@Param('id', ParseIntPipe) id: number) {
+    const userIndex = this.users.findIndex((user) => user.id === id);
 
     if (userIndex === -1) {
       throw new NotFoundException(`User with ID ${id} not found`);
