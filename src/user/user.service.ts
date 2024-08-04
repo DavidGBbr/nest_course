@@ -9,4 +9,12 @@ export class UserService {
   async createUser({ email, name, password }: CreateUserDTO) {
     return await this.prisma.user.create({ data: { email, name, password } });
   }
+
+  async listUsers() {
+    return await this.prisma.user.findMany();
+  }
+
+  async getUserById(id: number) {
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
 }

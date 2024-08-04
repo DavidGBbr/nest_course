@@ -27,12 +27,12 @@ export class UserController {
 
   @Get()
   async getUsers() {
-    return this.users;
+    return this.userService.listUsers();
   }
 
   @Get(':id')
   async getUserById(@Param('id', ParseIntPipe) id: number) {
-    return this.users.find((user) => user.id === id);
+    return this.userService.getUserById(id);
   }
 
   @Put(':id')
