@@ -17,7 +17,6 @@ import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
-  private readonly users = [];
   constructor(private readonly userService: UserService) {}
 
   @Post()
@@ -53,13 +52,6 @@ export class UserController {
 
   @Delete(':id')
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
-    const userIndex = this.users.findIndex((user) => user.id === id);
-
-    if (userIndex === -1) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    this.users.splice(userIndex, 1);
-    return { message: 'User deleted successfully' };
+    return this.userService.deleteUser(id);
   }
 }
