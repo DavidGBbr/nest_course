@@ -37,46 +37,18 @@ export class UserController {
 
   @Put(':id')
   async updateUser(
-    @Body() { name, email, password }: UpdateUserDTO,
+    @Body() data: UpdateUserDTO,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    const userIndex = this.users.findIndex((user) => user.id === id);
-
-    if (userIndex === -1) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    this.users[userIndex] = { ...this.users[userIndex], name, email, password };
-    return this.users[userIndex];
+    return this.userService.updateUser(id, data);
   }
 
   @Patch(':id')
   async updatePartialUser(
-    @Body() { name, email, password }: UpdatePatchUserDTO,
+    @Body() data: UpdatePatchUserDTO,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    const userIndex = this.users.findIndex((user) => user.id === id);
-
-    if (userIndex === -1) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    if (name) {
-      this.users[userIndex].name = name;
-    }
-
-    if (email) {
-      this.users[userIndex].email = email;
-    }
-
-    if (password) {
-      this.users[userIndex].password = password;
-    }
-
-    const updatedUser = { ...this.users[userIndex], name, email, password };
-    this.users[userIndex] = updatedUser;
-
-    return updatedUser;
+    return this.userService.updatePartialUser(id, data);
   }
 
   @Delete(':id')
