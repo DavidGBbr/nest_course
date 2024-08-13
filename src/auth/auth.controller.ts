@@ -6,14 +6,14 @@ import { AuthResetDTO } from './dto/auth-reset.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
   ) {}
 
-  @Post('auth')
+  @Post('login')
   async login(@Body() { email, password }: AuthLoginDTO) {
     return this.authService.login(email, password);
   }
