@@ -19,7 +19,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly userService: UserService,
   ) {}
-  async createToken(user: User) {
+  createToken(user: User) {
     return {
       acessToken: this.jwtService.sign(
         {
@@ -37,7 +37,7 @@ export class AuthService {
     };
   }
 
-  async checkToken(token: string) {
+  checkToken(token: string) {
     try {
       const data = this.jwtService.verify(token, {
         issuer: this.issuer,
@@ -50,7 +50,7 @@ export class AuthService {
     }
   }
 
-  async isValidToken(token: string) {
+  isValidToken(token: string) {
     try {
       this.checkToken(token);
       return true;
